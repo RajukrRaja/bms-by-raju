@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 
 use App\Models\User;
 
@@ -82,9 +85,6 @@ return response()->json([
 }
 
 
-
-
-
 public function login(Request $request)
 {
 
@@ -98,6 +98,8 @@ $validator = Validator::make($request->all(), [
 
 if ($validator->fails()) {
 
+if ($request->expectsJson()) {
+
 return response()->json([
 
 'success' => false,
@@ -108,9 +110,15 @@ return response()->json([
 
 }
 
+return back()->withErrors($validator)->withInput();
+
+}
+
 $credentials = $request->only('email', 'password');
 
 if (!$token = Auth::guard('api')->attempt($credentials)) {
+
+if ($request->expectsJson()) {
 
 return response()->json([
 
@@ -119,6 +127,18 @@ return response()->json([
 'message' => 'Invalid credentials',
 
 ], 401);
+
+}
+
+return back()->with('error', 'Invalid credentials');
+
+}
+
+Auth::login(Auth::guard('api')->user());
+
+if ($request->isMethod('post') && !$request->ajax()) {
+
+return redirect('/auth/profile');
 
 }
 
@@ -139,32 +159,47 @@ return response()->json([
 }
 
 
-
-
 public function profile()
 {
+    $user = auth()->user();
 
-$user = Auth::guard('api')->user();
+    // Check user logged in or not
+    if (!$user) {
 
-return view('auth.profile', compact('user'));
+        return redirect('/auth/login-page');
 
+    }
+
+    return view('auth.profile', compact('user'));
 }
 
 
 
 public function logout()
 {
+    try {
 
-Auth::guard('api')->logout();
+        if (JWTAuth::getToken()) {
 
-return response()->json([
+            Auth::guard('api')->logout();
+        }
 
-'success' => true,
+    } catch (JWTException $e) {
 
-'message' => 'User logged out successfully',
+        // token na mile tab bhi redirect kar do
+    }
 
-]);
+    // session logout
+    Auth::logout();
 
+    // session invalidate
+    request()->session()->invalidate();
+
+    // regenerate token
+    request()->session()->regenerateToken();
+
+    // redirect to login page
+    return redirect('/auth/login-page');
 }
 
 }
