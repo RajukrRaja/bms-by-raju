@@ -1,59 +1,409 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel JWT Authentication API
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="320" alt="Laravel Logo">
 </p>
 
-## About Laravel
+<p align="center">
+    <img src="https://img.shields.io/badge/Laravel-12-red" alt="Laravel">
+    <img src="https://img.shields.io/badge/PHP-8.2-blue" alt="PHP">
+    <img src="https://img.shields.io/badge/JWT-Authentication-green" alt="JWT">
+    <img src="https://img.shields.io/badge/API-REST-orange" alt="REST API">
+    <img src="https://img.shields.io/badge/License-MIT-black" alt="License">
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# About Project
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This project is a Laravel REST API application with JWT Authentication support and Book CRUD APIs.
 
-## Learning Laravel
+Features included:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+* JWT Authentication
+* User Registration & Login
+* Protected APIs
+* User Profile
+* Logout System
+* Book CRUD APIs
+* MySQL Database
+* JSON API Responses
+* Blade Authentication Pages
+* Cookie Based Authentication
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+# Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Technology | Version        |
+| ---------- | -------------- |
+| PHP        | 8+             |
+| Laravel    | 12             |
+| MySQL      | Latest         |
+| JWT Auth   | tymon/jwt-auth |
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Requirements
 
-## Contributing
+Make sure the following are installed:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* PHP 8+
+* Composer
+* MySQL
+* Git
 
-## Code of Conduct
+Check installed versions:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php -v
+composer -V
+mysql --version
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Project Setup
 
-## License
+## 1. Clone Repository
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+git clone https://github.com/your-username/project-name.git
+```
+
+---
+
+## 2. Open Project Directory
+
+```bash
+cd project-name
+```
+
+---
+
+## 3. Install Dependencies
+
+```bash
+composer install
+```
+
+---
+
+# Database Setup
+
+## Download Database File
+
+Direct download link:
+
+```bash
+https://github.com/your-username/your-repository/raw/main/database/bms_by_raju%20(1).sql
+```
+
+---
+
+## Create Database
+
+Create database using same database name:
+
+```sql
+CREATE DATABASE bms_by_raju;
+```
+
+---
+
+## Import Database
+
+Import SQL file using terminal:
+
+```bash
+mysql -u root -p bms_by_raju < "database/bms_by_raju (1).sql"
+```
+
+---
+
+## Import Using phpMyAdmin
+
+1. Open phpMyAdmin
+2. Create database `bms_by_raju`
+3. Click Import
+4. Select `bms_by_raju (1).sql`
+5. Click Go
+
+---
+
+# Environment Setup
+
+## Copy Environment File
+
+```bash
+cp .env.example .env
+```
+
+---
+
+## Configure `.env`
+
+```env
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bms_by_raju
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+# Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+---
+
+# JWT Setup
+
+## Install JWT Package
+
+```bash
+composer require tymon/jwt-auth
+```
+
+---
+
+## Publish JWT Configuration
+
+```bash
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+```
+
+---
+
+## Generate JWT Secret
+
+```bash
+php artisan jwt:secret
+```
+
+JWT secret will automatically be added inside `.env`
+
+```env
+JWT_SECRET=your_generated_secret
+```
+
+---
+
+# API Prefix Removed
+
+Default Laravel `/api` prefix has been removed from `bootstrap/app.php`.
+
+```php
+->withRouting(
+    web: __DIR__.'/../routes/web.php',
+    api: __DIR__.'/../routes/api.php',
+    commands: __DIR__.'/../routes/console.php',
+    health: '/up',
+    apiPrefix: '',
+)
+```
+
+---
+
+# Run Migration
+
+```bash
+php artisan migrate
+```
+
+---
+
+# Start Development Server
+
+```bash
+php artisan serve
+```
+
+Application URL:
+
+```bash
+http://127.0.0.1:8000
+```
+
+---
+
+# API Base URL
+
+```http
+http://127.0.0.1:8000
+```
+
+---
+
+# Authentication APIs
+
+| Method | Endpoint         | Controller Method | Description                    |
+| ------ | ---------------- | ----------------- | ------------------------------ |
+| POST   | `/auth/register` | `register()`      | Register new user              |
+| POST   | `/auth/login`    | `login()`         | Login user                     |
+| GET    | `/auth/profile`  | `profile()`       | Get authenticated user profile |
+| POST   | `/auth/logout`   | `logout()`        | Logout authenticated user      |
+
+---
+
+# Book APIs
+
+| Method | Endpoint             | Controller Method  | Description            |
+| ------ | -------------------- | ------------------ | ---------------------- |
+| POST   | `/books`             | `addBook()`        | Create new book        |
+| GET    | `/books`             | `getBooks()`       | Fetch all books        |
+| GET    | `/books/{id}`        | `getSingleBook()`  | Fetch single book      |
+| GET    | `/update-books/{id}` | `updateBookView()` | Fetch update book view |
+| PUT    | `/books/{id}`        | `updateBook()`     | Update book            |
+| DELETE | `/books/{id}`        | `deleteBook()`     | Delete book            |
+
+---
+
+# Web Routes
+
+| Method | Route                 | Description       |
+| ------ | --------------------- | ----------------- |
+| GET    | `/auth/register-page` | Register page     |
+| GET    | `/auth/login-page`    | Login page        |
+| GET    | `/auth/profile`       | User profile page |
+
+---
+
+# Authentication Header
+
+Protected APIs require Bearer Token.
+
+```http
+Authorization: Bearer your_token
+```
+
+---
+
+# Useful Commands
+
+## Start Server
+
+```bash
+php artisan serve
+```
+
+---
+
+## Run Migration
+
+```bash
+php artisan migrate
+```
+
+---
+
+## Fresh Migration
+
+```bash
+php artisan migrate:fresh
+```
+
+---
+
+## Clear Cache
+
+```bash
+php artisan optimize:clear
+```
+
+---
+
+## Clear Routes Cache
+
+```bash
+php artisan route:clear
+```
+
+---
+
+## Show Routes
+
+```bash
+php artisan route:list
+```
+
+---
+
+# Common Errors
+
+## JWT Secret Missing
+
+Run:
+
+```bash
+php artisan jwt:secret
+```
+
+---
+
+## Route Not Found
+
+Run:
+
+```bash
+php artisan route:clear
+php artisan cache:clear
+```
+
+---
+
+## Database Connection Error
+
+Check `.env` credentials:
+
+```env
+DB_DATABASE=bms_by_raju
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+## Migration Issues
+
+Run:
+
+```bash
+php artisan migrate:fresh
+```
+
+---
+
+# Project Structure
+
+```bash
+app/
+├── Http/
+│   └── Controllers/
+│       └── Api/
+│           ├── AuthController.php
+│           └── BookController.php
+
+database/
+├── bms_by_raju (1).sql
+
+resources/
+├── views/
+│   └── auth/
+
+routes/
+├── api.php
+├── web.php
+```
+
