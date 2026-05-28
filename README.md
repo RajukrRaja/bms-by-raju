@@ -1,16 +1,29 @@
 # Laravel JWT Authentication API
 
-<p align="center">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="320" alt="Laravel Logo">
-</p>
 
-<p align="center">
-    <img src="https://img.shields.io/badge/Laravel-12-red" alt="Laravel">
-    <img src="https://img.shields.io/badge/PHP-8.2-blue" alt="PHP">
-    <img src="https://img.shields.io/badge/JWT-Authentication-green" alt="JWT">
-    <img src="https://img.shields.io/badge/API-REST-orange" alt="REST API">
-    <img src="https://img.shields.io/badge/License-MIT-black" alt="License">
-</p>
+
+
+# Git Commit History
+
+| Commit ID | Commit Message                                                                           | Description                                                                                                                                                       |
+| --------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `4bac242` | Resolve the conflict jwt due to csrf in browser or postman and clean maintained all code | Fixed JWT authentication conflict caused by CSRF protection in browser and Postman requests. Refactored and cleaned project structure for better maintainability. |
+| `1245e04` | modified and improve view pages and added route , migration for books                    | Improved authentication and book management view pages. Added routes and database migration for books module.                                                     |
+| `fad32f5` | added middleware and AuthController for register login and profile                       | Added authentication middleware and implemented AuthController with register, login, and profile APIs.                                                             |
+| `71447ed` | add migration for user table also model for user                                         | Added migration for users table and created User model configuration.                                                                                             |
+| `a397a50` | generated jwt token and added routes for auth                                            | Configured JWT authentication and added authentication API routes.                                                                                                |
+| `8278665` | first commit by raju                                                                     | Initial Laravel project setup and base configuration.                                                                                                             |
+ ---
+
+# Postman Collection
+
+```bash
+bms-by-raju.postman_collection.json
+```
+
+Import collection into Postman using `Import` button.
+
+
 
 ---
 
@@ -31,18 +44,6 @@ Features included:
 * Blade Authentication Pages
 * Cookie Based Authentication
 
----
-
-# Tech Stack
-
-| Technology | Version        |
-| ---------- | -------------- |
-| PHP        | 8+             |
-| Laravel    | 12             |
-| MySQL      | Latest         |
-| JWT Auth   | tymon/jwt-auth |
-
----
 
 # Requirements
 
@@ -93,13 +94,22 @@ composer install
 
 ## Download Database File
 
-Direct download link:
+1. Open database folder:
 
 ```bash
-https://github.com/your-username/your-repository/raw/main/database/bms_by_raju%20(1).sql
+https://github.com/RajukrRaja/bms-by-raju/database
 ```
 
----
+2. Open file:
+
+```bash
+database/bms_by_raju (1).sql
+```
+
+3. Click `Raw`
+
+4. Press `Ctrl + S` to download the database file
+
 
 ## Create Database
 
@@ -290,55 +300,7 @@ Authorization: Bearer your_token
 
 ---
 
-# Useful Commands
 
-## Start Server
-
-```bash
-php artisan serve
-```
-
----
-
-## Run Migration
-
-```bash
-php artisan migrate
-```
-
----
-
-## Fresh Migration
-
-```bash
-php artisan migrate:fresh
-```
-
----
-
-## Clear Cache
-
-```bash
-php artisan optimize:clear
-```
-
----
-
-## Clear Routes Cache
-
-```bash
-php artisan route:clear
-```
-
----
-
-## Show Routes
-
-```bash
-php artisan route:list
-```
-
----
 
 # Common Errors
 
@@ -375,35 +337,4 @@ DB_PASSWORD=
 
 ---
 
-## Migration Issues
-
-Run:
-
-```bash
-php artisan migrate:fresh
-```
-
----
-
-# Project Structure
-
-```bash
-app/
-├── Http/
-│   └── Controllers/
-│       └── Api/
-│           ├── AuthController.php
-│           └── BookController.php
-
-database/
-├── bms_by_raju (1).sql
-
-resources/
-├── views/
-│   └── auth/
-
-routes/
-├── api.php
-├── web.php
-```
 
