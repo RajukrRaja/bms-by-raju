@@ -13,7 +13,7 @@
 
 <body>
 
-<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+<div style="display:flex;justify-content:center;align-items:center;height:100vh;">
 
 <div>
 
@@ -21,7 +21,11 @@
 
 @if(session('error'))
 
-<p>{{ session('error') }}</p>
+<p>
+
+{{ session('error') }}
+
+</p>
 
 @endif
 
@@ -53,15 +57,14 @@ Login
 
 </button>
 
-<a href="/auth/register-page">
-
-<button type="button">
+<button 
+type="button"
+onclick="window.location='/auth/register-page'"
+>
 
 Register
 
 </button>
-
-</a>
 
 </form>
 

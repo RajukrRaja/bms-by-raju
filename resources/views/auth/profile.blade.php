@@ -13,23 +13,36 @@
 
 <body>
 
-<div style="display:flex; width:100%;">
+<div style="width:90%; margin:auto; margin-top:30px;">
+
+<h1>Dashboard</h1>
+
+<div style="display:flex; border:1px solid black;">
 
 <div style="width:40%; padding:20px;">
 
+<h2>Profile</h2>
 
+<hr>
 
-<h1>Profile</h1>
+<p>
+<strong>Name :</strong> {{ $user->name }}
+</p>
 
-<h3>Name : {{ $user->name }}</h3>
+<p>
+<strong>Email :</strong> {{ $user->email }}
+</p>
 
-<h3>Email : {{ $user->email }}</h3>
+<br>
 
 <form action="/auth/logout" method="POST">
 
 @csrf
 
-<button type="submit">
+<button 
+type="submit"
+style="padding:10px 20px;"
+>
 
 Logout
 
@@ -43,27 +56,40 @@ Logout
 
 <div style="width:60%; padding:20px;">
 
-<h1>Book Management</h1>
+<h2>Book Management</h2>
 
-<button>
+<hr>
+
+<div style="display:flex; gap:10px; flex-wrap:wrap;">
+
+<a href="/create-books">
+
+<button style="padding:10px 15px;">
+
 Add Book
+
 </button>
 
-<button>
-List Books
+</a>
+
+<a href="/books">
+
+<button style="padding:10px 15px;">
+
+Show All Books
+
 </button>
 
-<button>
-Fetch One
-</button>
+</a>
 
-<button>
-Update Book
-</button>
 
-<button>
-Soft Delete
-</button>
+
+
+
+
+</div>
+
+</div>
 
 </div>
 

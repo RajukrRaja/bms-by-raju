@@ -3,203 +3,145 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-
-
 use App\Models\User;
 
 class AuthController extends Controller
 {
-
-
-
-public function register_page()
-{
-
-return view('auth.register');
-
-}
-
-
-public function login_page()
-{
-
-return view('auth.login');
-
-}
-
-
-
-public function register(Request $request)
-{
-
-$validator = Validator::make($request->all(), [
-
-'name' => 'required|string|max:255',
-
-'email' => 'required|email|unique:users,email',
-
-'password' => 'required|min:6',
-
-]);
-
-if ($validator->fails()) {
-
-return response()->json([
-
-'success' => false,
-
-'errors' => $validator->errors(),
-
-], 422);
-
-}
-
-$user = User::create([
-
-'name' => $request->name,
-
-'email' => $request->email,
-
-'password' => Hash::make($request->password),
-
-]);
-
-return response()->json([
-
-'success' => true,
-
-'message' => 'User registered successfully',
-
-'data' => $user,
-
-], 201);
-
-}
-
-
-public function login(Request $request)
-{
-
-$validator = Validator::make($request->all(), [
-
-'email' => 'required|email',
-
-'password' => 'required',
-
-]);
-
-if ($validator->fails()) {
-
-if ($request->expectsJson()) {
-
-return response()->json([
-
-'success' => false,
-
-'errors' => $validator->errors(),
-
-], 422);
-
-}
-
-return back()->withErrors($validator)->withInput();
-
-}
-
-$credentials = $request->only('email', 'password');
-
-if (!$token = Auth::guard('api')->attempt($credentials)) {
-
-if ($request->expectsJson()) {
-
-return response()->json([
-
-'success' => false,
-
-'message' => 'Invalid credentials',
-
-], 401);
-
-}
-
-return back()->with('error', 'Invalid credentials');
-
-}
-
-Auth::login(Auth::guard('api')->user());
-
-if ($request->isMethod('post') && !$request->ajax()) {
-
-return redirect('/auth/profile');
-
-}
-
-return response()->json([
-
-'success' => true,
-
-'message' => 'Login successful',
-
-'token' => $token,
-
-'token_type' => 'bearer',
-
-'user' => Auth::guard('api')->user(),
-
-]);
-
-}
-
-
-public function profile()
-{
-    $user = auth()->user();
-
-    // Check user logged in or not
-    if (!$user) {
-
-        return redirect('/auth/login-page');
-
+    public function register_page()
+    {
+        return view('auth.register');
     }
 
-    return view('auth.profile', compact('user'));
-}
+    public function login_page()
+    {
+        return view('auth.login');
+    }
 
+    public function register(Request $request)
+    {
+        if (User::where('email', $request->email)->exists()) {
 
+            return $request->header('accept') == 'application/json'
 
-public function logout()
-{
-    try {
+                ? response()->json([
+                    'success' => false,
+                    'message' => 'Email already exists'
+                ], 409)
 
-        if (JWTAuth::getToken()) {
-
-            Auth::guard('api')->logout();
+                : back()->with('error', 'Email already exists');
         }
 
-    } catch (JWTException $e) {
+        $user = User::create([
 
-        // token na mile tab bhi redirect kar do
+            'name' => $request->name,
+
+            'email' => $request->email,
+
+            'password' => Hash::make($request->password),
+
+        ]);
+
+        return $request->header('accept') == 'application/json'
+
+            ? response()->json([
+                'success' => true,
+                'message' => 'User registered successfully',
+                'user' => $user
+            ])
+
+            : redirect('/auth/login-page');
     }
 
-    // session logout
-    Auth::logout();
+    public function login(Request $request)
+    {
+        if (!$token = JWTAuth::attempt($request->only('email', 'password'))) {
 
-    // session invalidate
-    request()->session()->invalidate();
+            return $request->header('accept') == 'application/json'
 
-    // regenerate token
-    request()->session()->regenerateToken();
+                ? response()->json([
+                    'success' => false,
+                    'message' => 'Invalid credentials'
+                ], 401)
 
-    // redirect to login page
-    return redirect('/auth/login-page');
-}
+                : back()->with('error', 'Invalid credentials');
+        }
 
+        return $request->header('accept') == 'application/json'
+
+            ? response()->json([
+                'success' => true,
+                'message' => 'Login successful',
+                'token' => $token
+            ])
+
+            : response()
+                ->redirectTo('/auth/profile')
+                ->withCookie(cookie('jwt_token', $token, 60));
+    }
+
+    public function profile(Request $request)
+    {
+        $token = $request->cookie('jwt_token') ?: $request->bearerToken();
+
+        if (!$token) {
+
+            return $request->header('accept') == 'application/json'
+
+                ? response()->json([
+                    'success' => false,
+                    'message' => 'Token not found'
+                ], 401)
+
+                : redirect('/auth/login-page');
+        }
+
+        try {
+
+            $user = JWTAuth::setToken($token)->authenticate();
+
+            return $request->header('accept') == 'application/json'
+
+                ? response()->json([
+                    'success' => true,
+                    'user' => $user
+                ])
+
+                : view('auth.profile', compact('user'));
+
+        } catch (\Exception $e) {
+
+            return $request->header('accept') == 'application/json'
+
+                ? response()->json([
+                    'success' => false,
+                    'message' => 'Invalid token'
+                ], 401)
+
+                : redirect('/auth/login-page');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $token = $request->cookie('jwt_token') ?: $request->bearerToken();
+
+        if ($token) {
+
+            JWTAuth::setToken($token)->invalidate();
+        }
+
+        return $request->header('accept') == 'application/json'
+
+            ? response()->json([
+                'success' => true,
+                'message' => 'Logout successful'
+            ])
+
+            : response()
+                ->redirectTo('/auth/login-page')
+                ->withCookie(cookie('jwt_token', '', -1));
+    }
 }

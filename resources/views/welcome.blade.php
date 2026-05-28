@@ -15,6 +15,18 @@
 
 <div style="text-align:right; padding:20px;">
 
+@if(Auth::check())
+
+<a href="/auth/profile">
+
+<button>
+Dashboard
+</button>
+
+</a>
+
+@else
+
 <a href="/auth/login-page">
 
 <button>
@@ -30,6 +42,8 @@ Register
 </button>
 
 </a>
+
+@endif
 
 </div>
 
