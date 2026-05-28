@@ -13,6 +13,10 @@
 
 <body>
 
+<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+
+<div>
+
 <h1>Register Page</h1>
 
 <form action="/auth/register" method="POST">
@@ -37,7 +41,21 @@ Register
 
 </button>
 
+<a href="/auth/login-page">
+
+<button type="button">
+
+Login
+
+</button>
+
+</a>
+
 </form>
+
+</div>
+
+</div>
 
 </body>
 

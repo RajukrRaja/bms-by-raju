@@ -13,6 +13,10 @@
 
 <body>
 
+<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+
+<div>
+
 <h1>Login Page</h1>
 
 @if(session('error'))
@@ -49,7 +53,21 @@ Login
 
 </button>
 
+<a href="/auth/register-page">
+
+<button type="button">
+
+Register
+
+</button>
+
+</a>
+
 </form>
+
+</div>
+
+</div>
 
 </body>
 
